@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{69D86539-6B59-6999-169C-B78CBB1D175F}") = "Bouncy Box", "Assembly-CSharp-firstpass.csproj", "{0CC96419-0AD3-05D3-D581-28A3EA520BE6}"
+EndProject
+Project("{69D86539-6B59-6999-169C-B78CBB1D175F}") = "Bouncy Box", "Assembly-CSharp.csproj", "{4030C039-5A06-8D9A-E7B9-821758D0A57A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CC96419-0AD3-05D3-D581-28A3EA520BE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CC96419-0AD3-05D3-D581-28A3EA520BE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CC96419-0AD3-05D3-D581-28A3EA520BE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CC96419-0AD3-05D3-D581-28A3EA520BE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4030C039-5A06-8D9A-E7B9-821758D0A57A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4030C039-5A06-8D9A-E7B9-821758D0A57A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4030C039-5A06-8D9A-E7B9-821758D0A57A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4030C039-5A06-8D9A-E7B9-821758D0A57A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
