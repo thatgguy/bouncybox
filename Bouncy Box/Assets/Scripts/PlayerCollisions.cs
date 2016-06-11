@@ -13,8 +13,8 @@ public class PlayerCollisions : MonoBehaviour {
 
 	void Start () {
 		//set force when bouncing
-		bounceForceX = 1;
-		bounceForceY = 1;
+		bounceForceX = 2;
+		bounceForceY = 2;
 
 		controllerObj = GameObject.FindGameObjectWithTag ("Controller");
 	}

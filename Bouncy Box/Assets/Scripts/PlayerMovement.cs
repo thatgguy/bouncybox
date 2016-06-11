@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D> ();
 		jumpSpeed = 20; //amount of force added when jumping
 		moveSpeed = 10; //speed when moving left/right
-		jumpTimer = .02f; //amount of time the player can hold the jump button
+		jumpTimer = 2; //amount of time the player can hold the jump button
 	}
 	
 	void Update () {
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		//Jump
-		if (Input.GetKey (KeyCode.Space) && secondJump) {
+		if (Input.GetKeyDown (KeyCode.Space) && secondJump) {
 			isJumping = true;
 			secondJump = false;
 		}
