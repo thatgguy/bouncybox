@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 	public Rigidbody2D rb;
 	public bool movingRight;
 
+	//[SerializeField] private float maxVelocityY;
 	[SerializeField] private float jumpSpeed;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private bool secondJump;
@@ -19,7 +20,21 @@ public class PlayerMovement : MonoBehaviour {
 		moveSpeed = 10; //speed when moving left/right
 		jumpTimer = 2; //amount of time the player can hold the jump button
 	}
+	/*
+	void FixedUpdate () {
+
+		if (rb.velocity.y >= maxVelocityY) {
+			rb.velocity = new Vector2 (rb.velocity.x, maxVelocityY);
+		}
+
+		if (rb.velocity.y <= -maxVelocityY) {
+			rb.velocity = new Vector2 (rb.velocity.x, maxVelocityY);
+		}
 	
+
+
+	}*/
+
 	void Update () {
 		
 

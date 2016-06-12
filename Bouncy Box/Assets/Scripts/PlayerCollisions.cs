@@ -6,6 +6,7 @@ public class PlayerCollisions : MonoBehaviour {
 
 	[SerializeField] private float bounceForceX;
 	[SerializeField] private float bounceForceY;
+	private Rigidbody2D rb;
 
 	public GameObject controllerObj;
 
@@ -15,6 +16,8 @@ public class PlayerCollisions : MonoBehaviour {
 		//set force when bouncing
 		bounceForceX = 2;
 		bounceForceY = 2;
+
+		rb = gameObject.GetComponent<Rigidbody2D> ();
 
 		controllerObj = GameObject.FindGameObjectWithTag ("Controller");
 	}
@@ -46,20 +49,20 @@ public class PlayerCollisions : MonoBehaviour {
 		
 	void OnCollisionExit2D (Collision2D coll) {
 		//adding force when bouncing
-		if (gameObject.GetComponent<Rigidbody2D> ().velocity.y > 0) {
-			gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, bounceForceY));
+		if (rb.velocity.y > 0) {
+			rb.AddForce (new Vector2 (0, bounceForceY));
 		}
 
-		if (gameObject.GetComponent<Rigidbody2D> ().velocity.y < 0) {
-			gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, -bounceForceY));
+		if (rb.velocity.y < 0) {
+			rb.AddForce (new Vector2 (0, -bounceForceY));
 		}
 
-		if (gameObject.GetComponent<Rigidbody2D> ().velocity.x > 0) {
-			gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (bounceForceX, 0));
+		if (rb.velocity.x > 0) {
+			rb.AddForce (new Vector2 (bounceForceX, 0));
 		}
 
-		if (gameObject.GetComponent<Rigidbody2D> ().velocity.x < 0) {
-			gameObject.GetComponent<Rigidbody2D> ().AddForce (new Vector2 (-bounceForceX, 0));
+		if (rb.velocity.x < 0) {
+			rb.AddForce (new Vector2 (-bounceForceX, 0));
 		}
 	}
 }
