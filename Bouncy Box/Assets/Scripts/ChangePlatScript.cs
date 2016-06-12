@@ -8,6 +8,8 @@ public class ChangePlatScript : MonoBehaviour {
 
 	private int segAmount;
 	private float offSetAmount;
+	private float spriteSizeX;
+	private float spriteSizeY;
 
 	public bool changed;
 	public int nextSegNum;
@@ -21,6 +23,10 @@ public class ChangePlatScript : MonoBehaviour {
 		nextSegNum = 0;
 		segAmount = 1;
 		offSetAmount = 0;
+
+		spriteSizeY = gameObject.GetComponentInChildren<SpriteRenderer> ().bounds.size.y;
+		spriteSizeX = gameObject.GetComponentInChildren<SpriteRenderer> ().bounds.size.x;
+		Debug.Log ("Sprite: " + spriteSizeX);
 
 		changed = false;
 		//stationary platform
@@ -47,7 +53,7 @@ public class ChangePlatScript : MonoBehaviour {
 		if (gameObject.transform.parent == null) {
 			transform.Translate (Vector3.left * Time.deltaTime * speed);
 		} else {
-			transform.localPosition = new Vector2 (segNum, 0);
+			transform.localPosition = new Vector2 (segNum * spriteSizeX, 0);
 		}
 
 		/*if (transform.parent != null) {
@@ -93,8 +99,8 @@ public class ChangePlatScript : MonoBehaviour {
 	void LeftDetect(){
 		
 
-		RaycastHit2D hit = (Physics2D.Raycast (transform.localPosition, Vector2.left, segAmount));
-		Debug.DrawRay (transform.position, Vector2.left * segAmount, Color.green, 5);
+		RaycastHit2D hit = (Physics2D.Raycast (transform.localPosition, Vector2.left, segAmount * spriteSizeX));
+		Debug.DrawRay (transform.position, Vector2.left * segAmount * spriteSizeX, Color.green, 5);
 
 
 		if (hit.collider != null && hit.collider.gameObject.tag == "ChangePlat") {
@@ -104,8 +110,8 @@ public class ChangePlatScript : MonoBehaviour {
 
 			Destroy(hit.collider);
 			segAmount += 1;
-			offSetAmount -= .5f;
-			gameObject.GetComponent <BoxCollider2D> ().size = new Vector2 (segAmount, .96f);
+			offSetAmount -= .5f * spriteSizeX;
+			gameObject.GetComponent <BoxCollider2D> ().size = new Vector2 (segAmount * spriteSizeX, .96f * spriteSizeY);
 			gameObject.GetComponent<BoxCollider2D> ().offset = new Vector2 (offSetAmount, 0);
 			LeftDetect ();
 		}
@@ -113,8 +119,8 @@ public class ChangePlatScript : MonoBehaviour {
 	//looks for changing platforms to the right and makes them part of the same platform (for moving platforms)
 	void RightDetect(){
 
-		RaycastHit2D hit = (Physics2D.Raycast (transform.localPosition, Vector2.right, segAmount));
-		Debug.DrawRay (transform.position, Vector2.right * segAmount, Color.green, 5);
+		RaycastHit2D hit = (Physics2D.Raycast (transform.localPosition, Vector2.right, segAmount * spriteSizeX));
+		Debug.DrawRay (transform.position, Vector2.right * segAmount * spriteSizeX, Color.green, 5);
 
 		if (hit.collider != null && hit.collider.gameObject.tag == "ChangePlat") {
 			nextSegNum += 1;
@@ -124,7 +130,7 @@ public class ChangePlatScript : MonoBehaviour {
 			Destroy (hit.collider);
 			segAmount += 1;
 			offSetAmount += .5f;
-			gameObject.GetComponent <BoxCollider2D> ().size = new Vector2 (segAmount, .96f);
+			gameObject.GetComponent <BoxCollider2D> ().size = new Vector2 (segAmount * spriteSizeX, .96f);
 			gameObject.GetComponent<BoxCollider2D> ().offset = new Vector2 (offSetAmount, 0);
 			RightDetect ();
 		}
