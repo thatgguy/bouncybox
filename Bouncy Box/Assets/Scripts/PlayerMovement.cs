@@ -16,9 +16,9 @@ public class PlayerMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> ();
-		jumpSpeed = 30; //amount of force added when jumping
+		jumpSpeed = 15; //amount of force added when jumping
 		moveSpeed = 15; //speed when moving left/right
-		jumpTimer = 1; //amount of time the player can hold the jump button.5
+		jumpTimer = .2f; //amount of time the player can hold the jump button.5
 	}
 	/*
 	void FixedUpdate () {
