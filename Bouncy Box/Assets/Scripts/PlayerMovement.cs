@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		/*cam = Camera.main;
+		planes = GeometryUtility.CalculateFrustumPlanes (cam);
+		playerColl = GetComponent<BoxCollider2D> ();
+*/
 		rb = GetComponent<Rigidbody2D> ();
 		jumpSpeed = 15; //amount of force added when jumping
 		moveSpeed = 15; //speed when moving left/right
@@ -36,8 +40,6 @@ public class PlayerMovement : MonoBehaviour {
 	}*/
 
 	void Update () {
-		
-
 
 		//Move left
 		if (Input.GetKeyDown (KeyCode.A)) {
@@ -60,20 +62,23 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && secondJump) {
 			isJumping = true;
 			secondJump = false;
+			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		}
 
 
-
+		/*
 		if (isJumping) {
 			jumpTimer -= Time.deltaTime;
 			if (jumpTimer > 0) {
 				rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
-
+			
 			}
-		}
+		}*/
 		if (Input.GetKeyUp (KeyCode.Space) && isJumping) {
-			isJumping = false;
-			rb.velocity = new Vector2 (rb.velocity.x, 0);
+			if (isJumping) {
+				isJumping = false;
+				rb.velocity = new Vector2 (rb.velocity.x, 0);
+			}
 		}
 	}
 

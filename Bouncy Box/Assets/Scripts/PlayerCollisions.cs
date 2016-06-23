@@ -46,6 +46,12 @@ public class PlayerCollisions : MonoBehaviour {
 			controllerObj.gameObject.GetComponent<ControllerScript> ().yellowBoxCount -= 1;
 		}
 	}
+
+	void OnTriggerExit2D (Collider2D coll) {
+		if (coll.gameObject.tag == "MainCamera") {
+			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+		}
+	}
 		
 	void OnCollisionExit2D (Collision2D coll) {
 		//adding force when bouncing
