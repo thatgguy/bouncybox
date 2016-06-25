@@ -83,10 +83,13 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D coll) {
-		//reset jump
-		secondJump = true;
-		isJumping = false;
-		jumpTimer = 1;
-
+		string collTag;
+		collTag = coll.gameObject.tag;
+		if (collTag == "Platform" || collTag == "ChangePlat" || collTag == "MovePlat" || collTag == "MovePlatRight" || collTag == "MovePlatleft") {
+			//reset jump
+			secondJump = true;
+			isJumping = false;
+			//jumpTimer = 1;
+		}
 	}
 }
