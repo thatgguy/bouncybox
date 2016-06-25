@@ -6,7 +6,9 @@ public class PlayerCollisions : MonoBehaviour {
 
 	[SerializeField] private float bounceForceX;
 	[SerializeField] private float bounceForceY;
+	[SerializeField] private bool camBound;
 	private Rigidbody2D rb;
+
 
 	public GameObject controllerObj;
 
@@ -48,7 +50,7 @@ public class PlayerCollisions : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D (Collider2D coll) {
-		if (coll.gameObject.tag == "MainCamera") {
+		if (coll.gameObject.tag == "MainCamera" && camBound) {
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
 	}
