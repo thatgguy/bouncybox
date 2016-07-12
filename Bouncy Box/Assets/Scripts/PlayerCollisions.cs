@@ -32,7 +32,7 @@ public class PlayerCollisions : MonoBehaviour {
 		
 		//yellow bar to next level
 		if (coll.gameObject.tag == "YellowBar") {
-			SceneManager.LoadScene ("END");
+			SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex + 1);
 		}
 	}
 

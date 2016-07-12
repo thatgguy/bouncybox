@@ -43,26 +43,17 @@ public class PlayerMovement : MonoBehaviour {
 
 		//Move left
 		if (Input.GetKeyDown (KeyCode.A)) {
-			Vector3 v3 = rb.velocity;
-			v3.x = -moveSpeed;
-			v3.z = v3.z;
-			rb.velocity = v3;
+			MoveLeft ();
 		}
 
 		//Move Right
 		if (Input.GetKeyDown (KeyCode.D)) {
-
-			Vector3 v3 = rb.velocity;
-			v3.x = moveSpeed;
-			v3.z = v3.z;
-			rb.velocity = v3;
+			MoveRight ();
 		}
 
 		//Jump
 		if (Input.GetKeyDown (KeyCode.Space) && secondJump) {
-			isJumping = true;
-			secondJump = false;
-			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+			
 		}
 
 
@@ -75,13 +66,38 @@ public class PlayerMovement : MonoBehaviour {
 			}
 		}*/
 		if (Input.GetKeyUp (KeyCode.Space) && isJumping) {
-			if (isJumping) {
-				isJumping = false;
-				rb.velocity = new Vector2 (rb.velocity.x, 0);
+			StopJump ();
 			}
+		}
+
+	public void MoveLeft() {
+		Vector3 v3 = rb.velocity;
+		v3.x = -moveSpeed;
+		v3.z = v3.z;
+		rb.velocity = v3;
+	}
+
+	public void MoveRight() {
+		Vector3 v3 = rb.velocity;
+		v3.x = moveSpeed;
+		v3.z = v3.z;
+		rb.velocity = v3;
+	}
+
+	public void Jump() {
+		if (secondJump) {
+			isJumping = true;
+			secondJump = false;
+			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
 		}
 	}
 
+	public void StopJump() {
+		if (isJumping) {
+			isJumping = false;
+			rb.velocity = new Vector2 (rb.velocity.x, 0);
+		}
+	}
 	void OnCollisionEnter2D (Collision2D coll) {
 		string collTag;
 		collTag = coll.gameObject.tag;
