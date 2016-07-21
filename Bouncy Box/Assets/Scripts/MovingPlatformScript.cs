@@ -32,14 +32,14 @@ public class MovingPlatformScript : MonoBehaviour {
 		if (platType == movePlatType.left) {
 			gameObject.tag = "MovePlatLeft";
 			gameObject.layer = 2;
-			speed = 3;
+
 			LeftDetect ();
 		}
 
 		if (platType == movePlatType.right) {
 			gameObject.tag = "MovePlatRight";
 			gameObject.layer = 2;
-			speed = -3;
+
 			RightDetect ();
 		}
 	}
@@ -80,43 +80,49 @@ public class MovingPlatformScript : MonoBehaviour {
 		Debug.DrawRay (transform.position, Vector2.left * segAmount * spriteSizeX, Color.green, 5);
 
 
-	if (hit.collider != null && hit.collider.gameObject.tag == "MovePlat") {
+		if (hit.collider != null && hit.collider.gameObject.tag == "MovePlat") {
 			nextSegNum -= 1;
 			hit.collider.gameObject.GetComponent<MovingPlatformScript> ().segNum = nextSegNum;
 			hit.collider.gameObject.transform.parent = transform;
 
-			Destroy(hit.collider);
+			Destroy (hit.collider);
 			segAmount += 1;
 			offSetAmount -= .5f * spriteSizeX;
 			gameObject.GetComponent <BoxCollider2D> ().size = new Vector2 (segAmount * spriteSizeX, .96f * spriteSizeY);
 			gameObject.GetComponent<BoxCollider2D> ().offset = new Vector2 (offSetAmount, 0);
 			LeftDetect ();
 			Debug.Log ("MovePlat");
+		} else {
+			speed = 3;
 		}
 	}
 
 	//looks for moving platforms to the right and makes them part of the same platform
 
 	void RightDetect(){
-
+		//Debug.Log ("transform.localposition: " + transform.localPosition);
 		RaycastHit2D hit = (Physics2D.Raycast (transform.localPosition, Vector2.right, segAmount * spriteSizeX));
 		Debug.DrawRay (transform.position, Vector2.right * segAmount * spriteSizeX, Color.green, 5);
 
 		//Debug.Log ("hit: " + hit.collider.gameObject.tag);
 
-	if (hit.collider != null && hit.collider.gameObject.tag == "MovePlat") {
+		if (hit.collider != null && hit.collider.gameObject.tag == "MovePlat") {
+			//int otherSegNum = hit.collider.gameObject.GetComponent<MovingPlatformScript> ().segNum;
 			nextSegNum += 1;
 			hit.collider.gameObject.GetComponent<MovingPlatformScript> ().segNum = nextSegNum;
 			hit.collider.gameObject.transform.parent = transform;
 
-			Destroy(hit.collider);
+			Destroy (hit.collider);
 			segAmount += 1;
 			offSetAmount += .5f * spriteSizeX;
 			gameObject.GetComponent <BoxCollider2D> ().size = new Vector2 (segAmount * spriteSizeX, .96f * spriteSizeY);
 			gameObject.GetComponent<BoxCollider2D> ().offset = new Vector2 (offSetAmount, 0);
 			RightDetect ();
 			Debug.Log ("MovePlat");
+		} else {
+			speed = -3;
 		}
+			
 	}
 
 	

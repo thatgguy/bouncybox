@@ -4,6 +4,7 @@ Library/previews/
 Library/ScriptAssemblies
 obj/
 Temp/
+Bouncy Box/Library/
 
 *.pidb
 *.userprefs
