@@ -15,3 +15,6 @@ Bouncy Box/Library/
 .DS_Store
  
 *.orig
+Bouncy Box/Library/AssetServerCacheV3
+Bouncy Box/Library/metadata/*
+Bouncy Box/Library/assetDatabase3
