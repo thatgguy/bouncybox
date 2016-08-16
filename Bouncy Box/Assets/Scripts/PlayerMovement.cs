@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour {
 	[SerializeField] private bool secondJump;
 	[SerializeField] private bool isJumping;
 	[SerializeField] private float jumpTimer;
+	[SerializeField] GameObject groundPlat;
+	[SerializeField] float groundPlatY;
+	[SerializeField] float boxStartPosY;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +22,7 @@ public class PlayerMovement : MonoBehaviour {
 		planes = GeometryUtility.CalculateFrustumPlanes (cam);
 		playerColl = GetComponent<BoxCollider2D> ();
 */
+		CalcStartPoint ();
 		rb = GetComponent<Rigidbody2D> ();
 		jumpSpeed = 18; //amount of force added when jumping
 		moveSpeed = 15; //speed when moving left/right
@@ -101,11 +105,19 @@ public class PlayerMovement : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D coll) {
 		string collTag;
 		collTag = coll.gameObject.tag;
-		if (collTag == "Platform" || collTag == "ChangePlat" || collTag == "MovePlat" || collTag == "MovePlatRight" || collTag == "MovePlatleft") {
+		if (collTag == "Platform" || collTag == "ChangePlat" || collTag == "MovePlat" || collTag == "MovePlatRight" || collTag == "MovePlatleft" || collTag == "GroundPlat") {
 			//reset jump
 			secondJump = true;
 			isJumping = false;
 			//jumpTimer = 1;
 		}
+	}
+
+	void CalcStartPoint () {
+		//determines which object is the yellow bar, takes its position, and calculates where the camera will stop.
+		groundPlat = GameObject.FindGameObjectWithTag ("GroundPlat");
+		groundPlatY = groundPlat.transform.position.y;
+		boxStartPosY = groundPlatY + groundPlat.GetComponentInChildren<SpriteRenderer> ().bounds.size.y / 2 + 2.25f;
+		transform.position = new Vector3 (groundPlat.transform.position.x, boxStartPosY, transform.position.z);
 	}
 }
