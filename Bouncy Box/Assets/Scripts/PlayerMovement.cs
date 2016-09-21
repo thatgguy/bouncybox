@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour {
 	[SerializeField] GameObject groundPlat;
 	[SerializeField] float groundPlatY;
 	[SerializeField] float boxStartPosY;
+	float accelThresh;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour {
 		jumpSpeed = 18; //amount of force added when jumping
 		moveSpeed = 15; //speed when moving left/right
 		jumpTimer = .2f; //amount of time the player can hold the jump button.5
+		accelThresh = .2f;
 	}
 	/*
 	void FixedUpdate () {
@@ -45,6 +47,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update () {
 
+		/*
 		//Move left
 		if (Input.GetKeyDown (KeyCode.A)) {
 			MoveLeft ();
@@ -57,22 +60,33 @@ public class PlayerMovement : MonoBehaviour {
 
 		//Jump
 		if (Input.GetKeyDown (KeyCode.Space) && secondJump) {
-			
+			Jump (); 
 		}
 
-
-		/*
-		if (isJumping) {
-			jumpTimer -= Time.deltaTime;
-			if (jumpTimer > 0) {
-				rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
-			
-			}
-		}*/
+		//Stop Jump
 		if (Input.GetKeyUp (KeyCode.Space) && isJumping) {
 			StopJump ();
-			}
+			}*/
+
+		//acce
+
+		if (Input.acceleration.x < -accelThresh) {
+			MoveLeft ();
 		}
+
+		if (Input.acceleration.x > accelThresh) {
+			MoveRight ();
+		}
+
+		if (Input.touchCount > 0) {
+			Jump ();
+		}
+
+		if (Input.touchCount == 0 && isJumping) {
+			StopJump ();
+		}
+	}
+
 
 	public void MoveLeft() {
 		Vector3 v3 = rb.velocity;
@@ -91,8 +105,8 @@ public class PlayerMovement : MonoBehaviour {
 	public void Jump() {
 		if (secondJump) {
 			isJumping = true;
-			secondJump = false;
 			rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
+			secondJump = false;
 		}
 	}
 
