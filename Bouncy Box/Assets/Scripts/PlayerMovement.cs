@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		//Jump
 		if (Input.GetKeyDown (KeyCode.Space) && secondJump) {
-			
+			Jump ();
 		}
 
 
