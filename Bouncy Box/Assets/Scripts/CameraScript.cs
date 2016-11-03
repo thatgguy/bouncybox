@@ -52,7 +52,7 @@ public class CameraScript : MonoBehaviour {
 		//determines which object is the yellow bar, takes its position, and calculates where the camera will stop.
 		yellowBar = GameObject.FindGameObjectWithTag ("YellowBar");
 		yellowBarY = yellowBar.transform.position.y;
-		cameraTop = yellowBarY + yellowBar.GetComponentInChildren<SpriteRenderer> ().bounds.size.y / 2;
+		cameraTop = yellowBarY + yellowBar.GetComponentInChildren<SpriteRenderer> ().bounds.size.y / 2 - .04f;
 		camFinalPos = cameraTop - Camera.main.orthographicSize;
 	}
 }
