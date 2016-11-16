@@ -105,10 +105,11 @@ public class PlayerMovement : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D coll) {
 		string collTag;
 		collTag = coll.gameObject.tag;
-		if (collTag == "Platform" || collTag == "ChangePlat" || collTag == "MovePlat" || collTag == "MovePlatRight" || collTag == "MovePlatleft" || collTag == "GroundPlat") {
+		if (collTag == "Platform" || collTag == "ChangePlat" || collTag == "MovePlat" || collTag == "MovePlatRight" || collTag == "MovePlatLeft" || collTag == "GroundPlat") {
 			//reset jump
 			secondJump = true;
 			isJumping = false;
+			Debug.Log ("Jump");
 			//jumpTimer = 1;
 		}
 	}
