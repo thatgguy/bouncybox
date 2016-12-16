@@ -39,6 +39,7 @@ public class PlayerCollisions : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D coll) {
 		//respike kills player
 		if (coll.CompareTag("RedSpike")) {
+			controllerObj.GetComponent<ControllerScript> ().AddDeath();
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
 		//yellow box collectible
@@ -50,6 +51,7 @@ public class PlayerCollisions : MonoBehaviour {
 
 	void OnTriggerExit2D (Collider2D coll) {
 		if (coll.gameObject.tag == "MainCamera" && camBound) {
+			controllerObj.GetComponent<ControllerScript> ().AddDeath();
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
 	}

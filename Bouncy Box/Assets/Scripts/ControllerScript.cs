@@ -2,18 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ControllerScript : MonoBehaviour {
 
 	private int yellowBoxCountMax;
+	private int redBoxCount;
 
 	private List<GameObject> yellowBoxes;
 	private List<GameObject> redBoxes;
 
-	private int redBoxCount;
-
+	private Text deathCountText;
 
 	public int yellowBoxCount;
+	public int deathCounter;
 
 	void Awake () {
 		DontDestroyOnLoad (transform.gameObject);
@@ -23,7 +25,9 @@ public class ControllerScript : MonoBehaviour {
 		
 		YellowBoxCalc ();
 		RedBoxCalc ();
-
+		deathCounter = 0;
+		deathCountText = GetComponentInChildren<Text> ();
+		deathCountText.text = deathCounter.ToString ();
 	}
 	
 	void Update () {
@@ -76,5 +80,10 @@ public class ControllerScript : MonoBehaviour {
 		foreach (GameObject box in temp) {
 			Destroy (box);
 		}
+	}
+
+	public void AddDeath () {
+		deathCounter += 1;
+		deathCountText.text = deathCounter.ToString ();
 	}
 }

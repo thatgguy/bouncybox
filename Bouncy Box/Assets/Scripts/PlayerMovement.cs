@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour {
 */
 		CalcStartPoint ();
 		rb = GetComponent<Rigidbody2D> ();
-		jumpSpeed = 12; //amount of force added when jumping
+		jumpSpeed = 15; //amount of force added when jumping
 		moveSpeed = 10; //speed when moving left/right
 		jumpTimer = .2f; //amount of time the player can hold the jump button.5
 	}
@@ -105,10 +105,11 @@ public class PlayerMovement : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D coll) {
 		string collTag;
 		collTag = coll.gameObject.tag;
-		if (collTag == "Platform" || collTag == "ChangePlat" || collTag == "MovePlat" || collTag == "MovePlatRight" || collTag == "MovePlatleft" || collTag == "GroundPlat") {
+		if (collTag == "Platform" || collTag == "ChangePlat" || collTag == "MovePlat" || collTag == "MovePlatRight" || collTag == "MovePlatLeft" || collTag == "GroundPlat") {
 			//reset jump
 			secondJump = true;
 			isJumping = false;
+			Debug.Log ("Jump");
 			//jumpTimer = 1;
 		}
 	}
