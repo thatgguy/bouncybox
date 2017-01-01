@@ -92,9 +92,9 @@ public class MovingPlatformScript : MonoBehaviour {
 			gameObject.GetComponent<BoxCollider2D> ().offset = new Vector2 (offSetAmount, 0);
 			LeftDetect ();
 			Debug.Log ("MovePlat");
-		} else {
+		} /*else {
 			speed = 3;
-		}
+		}*/
 	}
 
 	//looks for moving platforms to the right and makes them part of the same platform
@@ -120,7 +120,7 @@ public class MovingPlatformScript : MonoBehaviour {
 			RightDetect ();
 			Debug.Log ("MovePlat");
 		} else {
-			speed = -3;
+			speed *= -1;
 		}
 			
 	}
