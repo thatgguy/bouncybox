@@ -34,6 +34,12 @@ public class PlayerCollisions : MonoBehaviour {
 		if (coll.gameObject.tag == "YellowBar") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex + 1);
 		}
+		//portal collision
+		if (coll.gameObject.tag == "LeftPortal" || coll.gameObject.tag == "RightPortal") {
+			Debug.Log ("yes");
+			gameObject.transform.position = new Vector2 (coll.gameObject.GetComponent<WallScript> ().portalOutX, gameObject.transform.position.y);
+			rb.velocity *= -1;
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D coll) {
@@ -47,6 +53,7 @@ public class PlayerCollisions : MonoBehaviour {
 			Destroy (coll.gameObject);
 			controllerObj.gameObject.GetComponent<ControllerScript> ().yellowBoxCount -= 1;
 		}
+
 	}
 
 	void OnTriggerExit2D (Collider2D coll) {
