@@ -8,41 +8,35 @@ public class ControllerScript : MonoBehaviour {
 
 	private int yellowBoxCountMax;
 	private int redBoxCount;
+	private int totalLevels;
 
 	private List<GameObject> yellowBoxes;
 	private List<GameObject> redBoxes;
 
-	private Text deathCountText;
+	[SerializeField] private Text deathCountText;
+	[SerializeField] private Text levelText;
+
+	[SerializeField] private Text pauseResume;
+	[SerializeField] private Text pauseMain;
+	[SerializeField] private Text pauseQuit;
 
 	public int yellowBoxCount;
 	public int deathCounter;
 
-	void Awake () {
-		DontDestroyOnLoad (transform.gameObject);
-	}
-
 	void Start () {
-		
+		PlayerPrefs.SetString ("currentLevel", SceneManager.GetActiveScene ().name);
+		totalLevels = 15;
 		YellowBoxCalc ();
 		RedBoxCalc ();
-		deathCounter = 0;
-		deathCountText = GetComponentInChildren<Text> ();
-		deathCountText.text = deathCounter.ToString ();
+		deathCounter = PlayerPrefs.GetInt("PlayerDeaths");
+		deathCountText.text = "Deaths:" + deathCounter.ToString ();
+		levelText.text = SceneManager.GetActiveScene ().name + "/" + totalLevels;
 	}
 	
 	void Update () {
 		
 		if (yellowBoxCount == 0) {
 			RedBoxDestroy ();
-		}
-
-		if (Input.GetKeyDown (KeyCode.Escape)) {
-			Application.Quit ();
-
-		}
-		//restart level
-		if (Input.GetKey (KeyCode.R)) {
-			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 		}
 	}
 	//makes list of yellow boxes
@@ -84,6 +78,6 @@ public class ControllerScript : MonoBehaviour {
 
 	public void AddDeath () {
 		deathCounter += 1;
-		deathCountText.text = deathCounter.ToString ();
+		PlayerPrefs.SetInt ("PlayerDeaths", deathCounter);
 	}
 }

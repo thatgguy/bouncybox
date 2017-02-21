@@ -5,7 +5,6 @@ using System.Collections;
 
 public class ChangePlatScript : MonoBehaviour {
 
-
 	private int segAmount;
 	private float offSetAmount;
 	private float spriteSizeX;
@@ -18,7 +17,6 @@ public class ChangePlatScript : MonoBehaviour {
 	public enum changePlatType{stat, left, right}
 	public changePlatType cPlatType;
 
-	// Use this for initialization
 	void Start () {
 		nextSegNum = 0;
 		segAmount = 1;
@@ -55,17 +53,6 @@ public class ChangePlatScript : MonoBehaviour {
 		} else {
 			transform.localPosition = new Vector2 (segNum * spriteSizeX, 0);
 		}
-
-		/*if (transform.parent != null) {
-			if (GetComponentInParent<ChangePlatScript> ().changed) {
-				changed = true;
-			}
-		}*/
-
-		//change sprite when hit
-	
-
-
 	}
 
 	void OnCollisionExit2D(Collision2D coll) {
@@ -79,7 +66,6 @@ public class ChangePlatScript : MonoBehaviour {
 			foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>()) {
 				sr.color = new Color (1, 1, 1);
 			}
-			//GetComponentInChildren<ChangePlatScript> ().changed = true;
 		}
 	}
 
@@ -91,17 +77,14 @@ public class ChangePlatScript : MonoBehaviour {
 		//resets scene when hit and changed
 		if (coll.gameObject.tag == "Player" && changed) {
 			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
-
 		}
 	}
 
 	//looks for changing platforms to the left and makes them part of the same platform (for moving platforms)
 	void LeftDetect(){
-		
 
 		RaycastHit2D hit = (Physics2D.Raycast (transform.localPosition, Vector2.left, segAmount * spriteSizeX));
 		Debug.DrawRay (transform.position, Vector2.left * segAmount * spriteSizeX, Color.green, 5);
-
 
 		if (hit.collider != null && hit.collider.gameObject.tag == "ChangePlat") {
 			nextSegNum -= 1;

@@ -7,13 +7,15 @@ public class PlayerCollisions : MonoBehaviour {
 	[SerializeField] private float bounceForceX;
 	[SerializeField] private float bounceForceY;
 	[SerializeField] bool camBound;
+	[SerializeField] Sprite spriteRend;
 	private Rigidbody2D rb;
-
+	PlayerParticlesScript playerParticles;
 	public GameObject controllerObj;
-
-
+	Camera mainCam;
 
 	void Start () {
+		mainCam = Camera.main;
+		playerParticles = gameObject.GetComponentInChildren<PlayerParticlesScript> ();
 		//set force when bouncing
 		bounceForceX = 2;
 		bounceForceY = 2;
@@ -23,10 +25,6 @@ public class PlayerCollisions : MonoBehaviour {
 		controllerObj = GameObject.FindGameObjectWithTag ("Controller");
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	void OnCollisionEnter2D (Collision2D coll) {
 		
@@ -36,7 +34,6 @@ public class PlayerCollisions : MonoBehaviour {
 		}
 		//portal collision
 		if (coll.gameObject.tag == "LeftPortal" || coll.gameObject.tag == "RightPortal") {
-			Debug.Log ("yes");
 			gameObject.transform.position = new Vector2 (coll.gameObject.GetComponent<WallScript> ().portalOutX, gameObject.transform.position.y);
 			rb.velocity *= -1;
 		}
@@ -45,21 +42,20 @@ public class PlayerCollisions : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D coll) {
 		//respike kills player
 		if (coll.CompareTag("RedSpike")) {
-			controllerObj.GetComponent<ControllerScript> ().AddDeath();
-			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+			PlayerDeath ();
 		}
 		//yellow box collectible
 		if (coll.gameObject.tag == "YellowBox") {
 			Destroy (coll.gameObject);
 			controllerObj.gameObject.GetComponent<ControllerScript> ().yellowBoxCount -= 1;
+			playerParticles.yellowBoxParticle ();
 		}
 
 	}
 
 	void OnTriggerExit2D (Collider2D coll) {
 		if (coll.gameObject.tag == "MainCamera" && camBound) {
-			controllerObj.GetComponent<ControllerScript> ().AddDeath();
-			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+			PlayerDeath ();
 		}
 	}
 		
@@ -80,5 +76,13 @@ public class PlayerCollisions : MonoBehaviour {
 		if (rb.velocity.x < 0) {
 			rb.AddForce (new Vector2 (-bounceForceX, 0));
 		}
+	}
+
+	void PlayerDeath () {
+		playerParticles.deathParticles ();
+		controllerObj.GetComponent<ControllerScript> ().AddDeath();
+		mainCam.GetComponent<CameraScript> ().camSpeed = 0;
+		gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
+		rb.isKinematic = true;
 	}
 }

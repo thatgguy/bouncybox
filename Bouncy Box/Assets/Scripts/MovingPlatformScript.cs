@@ -44,7 +44,6 @@ public class MovingPlatformScript : MonoBehaviour {
 		}
 	}
 	
-	// Update is called once per frame 
 	void Update () {
 		//moves platform
 		if (gameObject.transform.parent == null) {
@@ -100,14 +99,10 @@ public class MovingPlatformScript : MonoBehaviour {
 	//looks for moving platforms to the right and makes them part of the same platform
 
 	void RightDetect(){
-		//Debug.Log ("transform.localposition: " + transform.localPosition);
 		RaycastHit2D hit = (Physics2D.Raycast (transform.localPosition, Vector2.right, segAmount * spriteSizeX));
 		Debug.DrawRay (transform.position, Vector2.right * segAmount * spriteSizeX, Color.green, 5);
 
-		//Debug.Log ("hit: " + hit.collider.gameObject.tag);
-
 		if (hit.collider != null && hit.collider.gameObject.tag == "MovePlat") {
-			//int otherSegNum = hit.collider.gameObject.GetComponent<MovingPlatformScript> ().segNum;
 			nextSegNum += 1;
 			hit.collider.gameObject.GetComponent<MovingPlatformScript> ().segNum = nextSegNum;
 			hit.collider.gameObject.transform.parent = transform;
@@ -118,7 +113,6 @@ public class MovingPlatformScript : MonoBehaviour {
 			gameObject.GetComponent <BoxCollider2D> ().size = new Vector2 (segAmount * spriteSizeX, .96f * spriteSizeY);
 			gameObject.GetComponent<BoxCollider2D> ().offset = new Vector2 (offSetAmount, 0);
 			RightDetect ();
-			Debug.Log ("MovePlat");
 		} else {
 			speed *= -1;
 		}

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraScript : MonoBehaviour {
 
-	[SerializeField] private float camSpeed;
+	public float camSpeed;
 	[SerializeField] private float moveDelay;
 	private float timeLeft;
 	private GameObject yellowBar;
@@ -16,7 +16,6 @@ public class CameraScript : MonoBehaviour {
 	[SerializeField] private float camStartPos;
 	private BoxCollider2D camColl;
 
-	// Use this for initialization
 	void Start () {
 		CalcStartPoint ();
 		CalcEndPoint ();
@@ -26,8 +25,7 @@ public class CameraScript : MonoBehaviour {
 		camColl = GetComponent<BoxCollider2D> ();
 		camColl.size = new Vector2 (Camera.main.orthographicSize * Camera.main.aspect * 2, Camera.main.orthographicSize * 2);
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		//delay timer
 		if (timeLeft > 0) {

@@ -5,8 +5,9 @@ public class PlayerMovement : MonoBehaviour {
 
 	public Rigidbody2D rb;
 	public bool movingRight;
+	public bool isPaused;
+	GameObject controllerObj;
 
-	//[SerializeField] private float maxVelocityY;
 	[SerializeField] private float jumpSpeed;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private bool secondJump;
@@ -15,70 +16,60 @@ public class PlayerMovement : MonoBehaviour {
 	[SerializeField] GameObject groundPlat;
 	[SerializeField] float groundPlatY;
 	[SerializeField] float boxStartPosY;
+	[SerializeField] PlayerParticlesScript playerParticleScript;
+	[SerializeField] TrailRenderer playerTrail;
+	bool trailIsTwo;
 
 	// Use this for initialization
 	void Start () {
-		/*cam = Camera.main;
-		planes = GeometryUtility.CalculateFrustumPlanes (cam);
-		playerColl = GetComponent<BoxCollider2D> ();
-*/
+		controllerObj = GameObject.FindGameObjectWithTag ("Controller");
+		playerParticleScript = GetComponentInChildren<PlayerParticlesScript> ();
+		playerTrail = GetComponentInChildren<TrailRenderer> ();
+		playerTrail.numCornerVertices = 0;
+		trailIsTwo = false;
+		
+
 		CalcStartPoint ();
 		rb = GetComponent<Rigidbody2D> ();
 		jumpSpeed = 15; //amount of force added when jumping
 		moveSpeed = 10; //speed when moving left/right
 		jumpTimer = .2f; //amount of time the player can hold the jump button.5
 	}
-	/*
-	void FixedUpdate () {
-
-		if (rb.velocity.y >= maxVelocityY) {
-			rb.velocity = new Vector2 (rb.velocity.x, maxVelocityY);
-		}
-
-		if (rb.velocity.y <= -maxVelocityY) {
-			rb.velocity = new Vector2 (rb.velocity.x, maxVelocityY);
-		}
-	
-
-
-	}*/
 
 	void Update () {
-
-		//Move left
-		if (Input.GetKeyDown (KeyCode.A)) {
-			MoveLeft ();
-		}
-
-		//Move Right
-		if (Input.GetKeyDown (KeyCode.D)) {
-			MoveRight ();
-		}
-
-		//Jump
-		if (Input.GetKeyDown (KeyCode.Space) && secondJump) {
-			Jump ();
-		}
-
-
-		/*
-		if (isJumping) {
-			jumpTimer -= Time.deltaTime;
-			if (jumpTimer > 0) {
-				rb.velocity = new Vector2 (rb.velocity.x, jumpSpeed);
-			
+		if (!isPaused) {
+			//Move left
+			if (Input.GetButtonDown ("Left") ) {
+				MoveLeft ();
 			}
-		}*/
-		if (Input.GetKeyUp (KeyCode.Space) && isJumping) {
-			StopJump ();
+
+			//Move Right
+			if (Input.GetButtonDown ("Right")) {
+				MoveRight ();
+			}
+
+			//Jump
+			if (Input.GetButtonDown ("SubmitJump") && secondJump) {
+				Jump ();
+				playerParticleScript.JumpParticle ();
+			}
+
+
+			if (Input.GetButtonUp ("SubmitJump") && isJumping) {
+				StopJump ();
 			}
 		}
+	}
 
 	public void MoveLeft() {
 		Vector3 v3 = rb.velocity;
 		v3.x = -moveSpeed;
 		v3.z = v3.z;
 		rb.velocity = v3;
+		if (trailIsTwo == false) {
+			playerTrail.numCornerVertices = 2;
+			trailIsTwo = true;
+		}
 	}
 
 	public void MoveRight() {
@@ -86,6 +77,10 @@ public class PlayerMovement : MonoBehaviour {
 		v3.x = moveSpeed;
 		v3.z = v3.z;
 		rb.velocity = v3;
+		if (trailIsTwo == false) {
+			playerTrail.numCornerVertices = 2;
+			trailIsTwo = true;
+		}
 	}
 
 	public void Jump() {
@@ -109,8 +104,6 @@ public class PlayerMovement : MonoBehaviour {
 			//reset jump
 			secondJump = true;
 			isJumping = false;
-			Debug.Log ("Jump");
-			//jumpTimer = 1;
 		}
 	}
 
